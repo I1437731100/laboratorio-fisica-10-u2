@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<!--LAB-VIRTUAL-FISICA-10-U2-->
+<html lang="es" data-theme="dark"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0c1220">
+<meta name="color-scheme" content="dark light">
+<title>Laboratorio Virtual · Física 10mo · Unidad 2 · Cinemática</title>
+<link rel="icon" href="data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'&gt;&lt;text y='.9em' font-size='90'&gt;🏎️&lt;/text&gt;&lt;/svg&gt;">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:70px}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  line-height:1.55;min-height:100vh;min-height:100dvh;
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  transition:background-color .35s,color .35s;position:relative;
+  background:var(--bg);color:var(--text);
+}
+.ico{width:1em;height:1em;display:inline-block;vertical-align:-.15em;flex-shrink:0}
+.ico-lg{width:1.25em;height:1.25em}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;border:none;background:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+::selection{background:rgba(234,88,12,.35);color:#fff}
+
+:root{
+  --acc:#ea580c;
+  --acc2:#0891b2;
+  --ok:#10b981;
+  --bad:#ef4444;
+  --warn:#f59e0b;
+  --r-sm:10px;--r:14px;--r-lg:20px;
+  --t:.22s cubic-bezier(.4,0,.2,1);
+}
+html[data-theme="dark"]{
+  --bg:#0c1220;
+  --bg-2:#111a2e;
+  --surf:#141c30;
+  --surf-2:#1a2340;
+  --line:rgba(255,255,255,.07);
+  --line-2:rgba(255,255,255,.14);
+  --text:#f5f5f7;
+  --text-2:#b8c0d0;
+  --muted:#7c8496;
+  --shadow:0 20px 50px -20px rgba(0,0,0,.7);
+  --acc-soft:rgba(234,88,12,.16);
+}
+html[data-theme="light"]{
+  --bg:#fbfaf7;
+  --bg-2:#f2f1ed;
+  --surf:#ffffff;
+  --surf-2:#f7f6f2;
+  --line:rgba(20,15,5,.07);
+  --line-2:rgba(20,15,5,.12);
+  --text:#14120d;
+  --text-2:#3a3528;
+  --muted:#7d786a;
+  --shadow:0 20px 50px -25px rgba(20,15,5,.14);
+  --acc-soft:rgba(234,88,12,.10);
+}
+
+#bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+#bg::after{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(var(--line) 1px,transparent 1px),
+    linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:52px 52px;
+  mask-image:radial-gradient(ellipse at center,#000 30%,transparent 85%);
+  -webkit-mask-image:radial-gradient(ellipse at center,#000 30%,transparent 85%);
+  opacity:.55;
+}
+.aurora{position:absolute;width:70vmax;height:70vmax;border-radius:50%;filter:blur(80px);opacity:.35;will-change:transform}
+html[data-theme="light"] .aurora{opacity:.18}
+.aurora.a{background:radial-gradient(circle,#ea580c,transparent 62%);top:-25vmax;left:-20vmax;animation:a1 24s ease-in-out infinite}
+.aurora.b{background:radial-gradient(circle,#0891b2,transparent 62%);bottom:-25vmax;right:-20vmax;animation:a2 28s ease-in-out infinite}
+@keyframes a1{0%,100%{transform:translate(0,0)}50%{transform:translate(8vmax,6vmax)}}
+@keyframes a2{0%,100%{transform:translate(0,0)}50%{transform:translate(-8vmax,-5vmax)}}
+#stars{position:absolute;inset:0;opacity:.5}
+html[data-theme="light"] #stars{opacity:.1}
+
+#app{position:relative;z-index:1;padding-bottom:100px}
+
+.hero{padding:clamp(36px,7vw,60px) 18px clamp(36px,7vw,60px);text-align:center}
+.hero-inner{max-width:760px;margin:0 auto}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:99px;
+  background:var(--acc-soft);border:1px solid rgba(234,88,12,.3);
+  font-size:.72rem;font-weight:700;letter-spacing:.6px;text-transform:uppercase;
+  color:var(--acc);margin-bottom:16px;animation:up .7s ease both;
+}
+html[data-theme="dark"] .badge{color:#fdba74}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok);animation:pulse 2s infinite}
+@keyframes pulse{50%{opacity:.35}}
+.hero h1{
+  font-size:clamp(1.6rem,5.5vw,2.9rem);font-weight:900;line-height:1.08;letter-spacing:-.025em;
+  background:linear-gradient(135deg,var(--text) 0%,var(--acc) 55%,var(--acc2) 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  animation:up .8s .05s ease both;
+}
+.hero p.lead{margin:14px auto 0;max-width:540px;color:var(--text-2);font-size:clamp(.88rem,2.1vw,1rem);animation:up .8s .12s ease both}
+.cta{margin-top:24px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;animation:up .8s .2s ease both}
+.stats{margin-top:30px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:440px;margin-inline:auto;animation:up .8s .28s ease both}
+.stat{background:var(--surf);border:1px solid var(--line);border-radius:var(--r);padding:12px 8px;text-align:center;transition:var(--t)}
+.stat:hover{border-color:var(--acc)}
+.stat b{display:block;font-size:clamp(1rem,3vw,1.35rem);font-weight:800;color:var(--acc);line-height:1}
+.stat span{font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:700}
+@keyframes up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px 20px;border-radius:var(--r);font-size:.88rem;font-weight:700;
+  transition:var(--t);min-height:44px;white-space:nowrap;position:relative;overflow:hidden;
+}
+.btn:active{transform:scale(.97)}
+.btn.pri{background:var(--acc);color:#fff;box-shadow:0 10px 26px -10px rgba(234,88,12,.6)}
+.btn.pri:hover{background:#c2410c;transform:translateY(-1px)}
+.btn.gh{background:var(--surf);border:1px solid var(--line-2);color:var(--text)}
+.btn.gh:hover{border-color:var(--acc);color:var(--acc)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+
+.tabs-wrap{
+  position:sticky;top:0;z-index:60;padding:8px 12px;
+  background:color-mix(in srgb,var(--bg) 85%,transparent);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.tabs{display:flex;gap:4px;max-width:960px;margin:0 auto;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;scroll-snap-type:x mandatory}
+.tabs::-webkit-scrollbar{display:none}
+.tab{
+  display:flex;align-items:center;gap:6px;padding:9px 14px;border-radius:var(--r-sm);
+  font-size:.8rem;font-weight:700;color:var(--muted);transition:var(--t);
+  flex-shrink:0;scroll-snap-align:start;border:1px solid transparent;
+}
+.tab:hover{color:var(--text);background:var(--surf)}
+.tab.on{color:#fff;background:var(--acc);box-shadow:0 6px 16px -6px rgba(234,88,12,.6)}
+@media (max-width:520px){
+  .tab{padding:8px 11px;font-size:.74rem}
+  .tab span.label{display:none}
+  .tab .ico{width:1.15em;height:1.15em}
+}
+
+main{max-width:940px;margin:0 auto;padding:20px 14px 0}
+.panel{display:none}
+.panel.on{display:block;animation:up .3s ease both}
+
+.card{
+  background:var(--surf);border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:clamp(18px,3.5vw,26px);margin-bottom:18px;box-shadow:var(--shadow);
+  position:relative;overflow:hidden;
+}
+.card h2{font-size:clamp(1.05rem,2.6vw,1.28rem);font-weight:800;letter-spacing:-.015em;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.card h2 .ico{color:var(--acc)}
+.card h3{font-size:.9rem;font-weight:700;margin:16px 0 8px;color:var(--acc);letter-spacing:-.005em}
+html[data-theme="dark"] .card h3{color:#fdba74}
+.nota{color:var(--muted);font-size:.85rem;margin-bottom:10px;line-height:1.6}
+.mini{font-size:.78rem;color:var(--muted);line-height:1.6}
+
+.rgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:10px;margin-top:12px}
+.ri{background:var(--surf-2);border:1px solid var(--line);border-radius:var(--r);padding:13px 15px;font-size:.85rem;transition:var(--t)}
+.ri:hover{border-color:var(--acc);transform:translateY(-2px)}
+.ri b{display:block;margin-bottom:4px;color:var(--acc);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+html[data-theme="dark"] .ri b{color:#fdba74}
+.fml{
+  display:block;font-family:'JetBrains Mono',monospace;font-size:.76rem;
+  background:var(--acc-soft);border-left:2px solid var(--acc);border-radius:6px;
+  padding:7px 10px;margin:7px 0;color:var(--text-2);
+  white-space:pre-wrap;word-break:break-word;overflow-x:auto;
+}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:10px 0;border-radius:var(--r);border:1px solid var(--line)}
+table.min{width:100%;border-collapse:collapse;font-size:.8rem;min-width:400px}
+table.min th,table.min td{padding:8px 11px;text-align:left;border-bottom:1px solid var(--line)}
+table.min th{background:var(--acc-soft);font-weight:700;font-size:.72rem;text-transform:uppercase;letter-spacing:.4px;color:var(--acc)}
+html[data-theme="dark"] table.min th{color:#fdba74}
+table.min tr:last-child td{border-bottom:0}
+.idea{
+  margin-top:14px;padding:12px 16px;border-radius:var(--r);
+  background:var(--acc-soft);border-left:3px solid var(--acc);
+  font-size:.85rem;line-height:1.6;
+}
+
+/* Sliders */
+.sliders{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:10px;margin:12px 0}
+.sl{background:var(--surf-2);border:1px solid var(--line);border-radius:var(--r);padding:11px 13px;transition:var(--t)}
+.sl:hover{border-color:var(--acc)}
+.slh{display:flex;justify-content:space-between;align-items:center;font-size:.78rem;font-weight:700;margin-bottom:8px;gap:8px}
+.slh .v{font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:700;padding:2px 9px;border-radius:6px;background:var(--acc-soft);color:var(--acc);min-width:64px;text-align:center}
+input[type=range]{width:100%;-webkit-appearance:none;appearance:none;height:5px;border-radius:99px;background:var(--acc);outline:none}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;width:22px;height:22px;border-radius:50%;
+  background:#fff;border:2.5px solid var(--acc);box-shadow:0 3px 8px -2px rgba(234,88,12,.5);cursor:pointer;
+}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:2.5px solid var(--acc);cursor:pointer}
+
+.canvas-box{background:var(--surf-2);border:1px solid var(--line);border-radius:var(--r);padding:8px;margin:12px 0}
+canvas{width:100%;height:auto;display:block;border-radius:10px;background:#fff;touch-action:none}
+
+.reads{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,118px),1fr));gap:8px;margin:12px 0}
+.rd{background:var(--surf-2);border:1px solid var(--line);border-radius:var(--r-sm);padding:9px 7px;text-align:center;transition:var(--t)}
+.rd:hover{border-color:var(--acc)}
+.rd b{display:block;font-size:.62rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
+.rd span{font-family:'JetBrains Mono',monospace;font-size:.9rem;font-weight:700;color:var(--text)}
+
+.btns-row{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0;justify-content:center}
+
+/* Quiz */
+.prog{display:flex;align-items:center;gap:10px;margin:12px 0;font-size:.78rem;font-weight:700;color:var(--muted)}
+.pbar{flex:1;height:6px;border-radius:99px;background:var(--line-2);overflow:hidden}
+.pfill{height:100%;width:10%;background:var(--acc);border-radius:99px;transition:width .4s}
+.qbox{background:var(--surf-2);border:1px solid var(--line-2);border-radius:var(--r-lg);padding:28px 18px;text-align:center;margin:14px 0;position:relative;overflow:hidden}
+.qico{width:64px;height:64px;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;color:var(--acc);background:var(--acc-soft);border-radius:20px}
+.qico svg{width:36px;height:36px}
+.qname{font-size:clamp(1.3rem,4.5vw,1.55rem);font-weight:800;letter-spacing:-.02em;margin-bottom:4px}
+.qunit{font-size:.8rem;color:var(--muted);font-weight:600;margin-bottom:20px}
+.qbtns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.qbtn{display:flex;align-items:center;gap:8px;justify-content:center;padding:13px 22px;border-radius:var(--r);font-size:.9rem;font-weight:700;min-height:48px;transition:var(--t);min-width:130px}
+.qbtn.a{background:#0891b2;color:#fff;box-shadow:0 8px 20px -8px rgba(8,145,178,.6)}
+.qbtn.b{background:var(--acc);color:#fff;box-shadow:0 8px 20px -8px rgba(234,88,12,.6)}
+.qbtn:hover{transform:translateY(-2px)}
+.qbtn:disabled{opacity:.5;transform:none;cursor:not-allowed}
+.qfb{margin-top:14px;font-weight:800;font-size:.88rem;min-height:22px}
+.fb-ok{color:var(--ok)}
+.fb-bad{color:var(--bad)}
+.final{text-align:center;padding:22px 12px}
+.fscore{font-size:clamp(2.2rem,8vw,3.4rem);font-weight:900;line-height:1;color:var(--acc);margin-bottom:6px}
+.fmsg{font-size:.9rem;margin-bottom:18px;color:var(--text-2)}
+
+/* Avatar 3D */
+#ava-wrap{
+  position:fixed;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));
+  z-index:80;display:flex;flex-direction:column;align-items:flex-end;
+  pointer-events:none;max-width:min(280px,calc(100vw - 24px));perspective:900px;
+}
+.ava-bubble{
+  pointer-events:auto;background:var(--surf);border:1px solid var(--line-2);
+  border-radius:16px 16px 4px 16px;padding:10px 14px;
+  font-size:.78rem;font-weight:600;color:var(--text);line-height:1.45;
+  box-shadow:0 14px 32px -14px rgba(0,0,0,.5);margin-bottom:8px;
+  max-width:min(230px,calc(100vw - 130px));animation:bIn .3s ease;position:relative;
+}
+.ava-bubble::after{
+  content:'';position:absolute;right:14px;bottom:-9px;width:0;height:0;
+  border:9px solid transparent;border-top-color:var(--surf);border-bottom:0;border-right:0;
+}
+@keyframes bIn{from{opacity:0;transform:translateY(6px) scale(.92)}to{opacity:1;transform:none}}
+.ava3d{
+  pointer-events:auto;cursor:pointer;width:118px;height:150px;
+  transform-style:preserve-3d;transition:transform .35s cubic-bezier(.3,.7,.4,1);
+  will-change:transform;filter:drop-shadow(0 22px 26px rgba(234,88,12,.35));
+  -webkit-tap-highlight-color:transparent;animation:idleA 5s ease-in-out infinite;
+}
+.ava3d:hover{filter:drop-shadow(0 26px 32px rgba(234,88,12,.55))}
+.ava3d.happy{animation:hapA .7s ease}
+.ava3d.sad{animation:sadA .9s ease}
+.ava3d.think{animation:thkA 2.4s ease-in-out infinite}
+@keyframes idleA{0%,100%{transform:translateY(0) rotateY(0) rotateX(0)}50%{transform:translateY(-5px) rotateY(2deg) rotateX(-2deg)}}
+@keyframes hapA{0%,100%{transform:translateY(0) rotateZ(0)}25%{transform:translateY(-14px) rotateZ(-6deg)}50%{transform:translateY(-6px) rotateZ(4deg)}75%{transform:translateY(-12px) rotateZ(-3deg)}}
+@keyframes sadA{0%,100%{transform:translateY(0)}50%{transform:translateY(4px) rotateZ(2deg)}}
+@keyframes thkA{0%,100%{transform:rotateZ(-1.5deg)}50%{transform:rotateZ(2deg)}}
+.ava-svg{width:100%;height:100%;display:block}
+.eyeB{animation:blink 5.4s infinite}
+@keyframes blink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.08)}}
+.shine{
+  position:absolute;inset:0;pointer-events:none;border-radius:inherit;
+  background:radial-gradient(circle at var(--mx,30%) var(--my,20%),rgba(255,255,255,.35),transparent 45%);
+  mix-blend-mode:screen;opacity:.7;transition:opacity .3s;
+}
+
+.fab{
+  position:fixed;z-index:80;width:46px;height:46px;border-radius:50%;
+  background:var(--surf);border:1px solid var(--line-2);color:var(--text);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 10px 22px -10px rgba(0,0,0,.4);transition:var(--t);
+}
+.fab:hover{transform:scale(1.08);border-color:var(--acc);color:var(--acc)}
+.fab.l{left:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+.fab.t{left:12px;bottom:calc(66px + env(safe-area-inset-bottom,0px))}
+.fab svg{width:20px;height:20px}
+
+.modal{
+  position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.7);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  display:none;align-items:flex-start;justify-content:center;padding:14px;overflow-y:auto;
+}
+.modal.on{display:flex;animation:up .25s ease}
+.mbox{
+  background:var(--surf);color:var(--text);border-radius:var(--r-lg);
+  max-width:600px;width:100%;padding:24px 20px;position:relative;
+  border:1px solid var(--line-2);box-shadow:0 40px 80px -30px rgba(0,0,0,.7);margin:auto;
+}
+.mclose{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;background:var(--surf-2);color:var(--text);display:flex;align-items:center;justify-content:center;transition:var(--t)}
+.mclose:hover{background:var(--bad);color:#fff}
+.gh-grid{display:grid;gap:10px;margin:12px 0;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr))}
+.fld{display:flex;flex-direction:column;gap:5px}
+.fld label{font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+.fld input{padding:10px 12px;border-radius:var(--r-sm);border:1px solid var(--line-2);background:var(--surf-2);font-size:.85rem;transition:var(--t)}
+.fld input:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 3px var(--acc-soft)}
+.pwd{position:relative}
+.pwd input{padding-right:40px;width:100%}
+.pwd button{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:6px;background:var(--surf);color:var(--text);display:flex;align-items:center;justify-content:center}
+#ghLog{margin-top:10px;background:#050508;color:#e2e8f0;border-radius:var(--r-sm);padding:12px;font-family:'JetBrains Mono',monospace;font-size:.72rem;display:none;flex-direction:column;gap:4px;max-height:180px;overflow-y:auto;word-break:break-word}
+#ghLog.on{display:flex}
+.lk{color:#4ade80}.le{color:#f87171}.li{color:#93c5fd}
+#ghDone{margin-top:12px;padding:16px;border-radius:var(--r);background:var(--acc-soft);border:1px solid rgba(16,185,129,.35);text-align:center;display:none}
+#ghDone.on{display:block}
+#ghDone .u{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--ok);word-break:break-all;margin:6px 0;font-size:.78rem}
+
+.conf{position:fixed;top:-20px;width:8px;height:12px;z-index:150;pointer-events:none;border-radius:2px}
+@keyframes fall{to{transform:translateY(105vh) rotate(720deg);opacity:0}}
+
+footer{text-align:center;padding:26px 14px 40px;color:var(--muted);font-size:.72rem;line-height:1.7;position:relative;z-index:1}
+footer b{color:var(--text-2)}
+
+@media (max-width:520px){
+  #ava-wrap{right:8px;bottom:calc(8px + env(safe-area-inset-bottom,0px))}
+  .ava3d{width:90px;height:115px}
+  .ava-bubble{font-size:.72rem;padding:8px 11px;max-width:min(190px,calc(100vw - 110px))}
+  .card{border-radius:var(--r);padding:16px 14px}
+  .hero{padding:32px 14px 36px}
+  .stat{padding:10px 6px}
+  .qbtn{min-width:110px;padding:12px 18px;font-size:.85rem}
+  .rd span{font-size:.82rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+@supports not ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){
+  .tabs-wrap{background:var(--bg)}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ ICONOS MINIMALISTAS ═══════════ -->
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h6a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H4z"></path><path d="M20 4h-6a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h7z"></path></symbol>
+  <symbol id="i-car" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11 6.5 6a2 2 0 0 1 2-1.5h7a2 2 0 0 1 2 1.5L19 11"></path><path d="M3 11h18v7H3z"></path><circle cx="7.5" cy="18.5" r="1.8"></circle><circle cx="16.5" cy="18.5" r="1.8"></circle></symbol>
+  <symbol id="i-speed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17a9 9 0 1 1 18 0"></path><path d="m12 13 4-4"></path><circle cx="12" cy="17" r="1.6" fill="currentColor"></circle></symbol>
+  <symbol id="i-parabola" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20C6 6 18 6 22 20"></path><circle cx="3" cy="19.5" r="1.4" fill="currentColor"></circle><path d="M4 17v-4M4 13h3"></path></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24" fill="none"><polygon points="6 4 20 12 6 20" fill="currentColor"></polygon></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"></rect><rect x="14" y="4" width="4" height="16" rx="1"></rect></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"></path></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"></path><circle cx="12" cy="12" r="3"></circle></symbol>
+  <symbol id="i-rocket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.3-2 5-2 5s3.7-.5 5-2c.7-.8.7-2 0-2.8a2 2 0 0 0-3-.2z"></path><path d="M12 15 9 12a11 11 0 0 1 2-6c2-3 5-4 8-4 0 3-1 6-4 8a11 11 0 0 1-6 2"></path></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"></path><path d="M21 3v6h-6"></path></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="5"></circle><circle cx="12" cy="12" r="1.5" fill="currentColor"></circle></symbol>
+  <symbol id="i-trend" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 17 6-6 4 4 8-8"></path><path d="M15 7h6v6"></path></symbol>
+  <symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m13 5 7 7-7 7"></path></symbol>
+  <symbol id="i-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"></path><path d="m5 12 7-7 7 7"></path></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"></path></symbol>
+  <symbol id="i-ruler" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 15 6-6 12 12-6 6z"></path><path d="M9 9l2 2M12 6l2 2M6 12l2 2"></path></symbol>
+</svg>
+
+<!-- ═══════════ FONDO ═══════════ -->
+<div id="bg" aria-hidden="true">
+  <div class="aurora a"></div>
+  <div class="aurora b"></div>
+  <canvas id="stars" width="576" height="1087" style="width: 384px; height: 725px;"></canvas>
+</div>
+
+<!-- ═══════════ AVATAR 3D ═══════════ -->
+<div id="ava-wrap">
+  <div class="ava-bubble" id="avaBubble" style="animation: 0.3s ease 0s 1 normal none running bIn;">En caída libre, todos los cuerpos caen con la misma aceleración.</div>
+  <div class="ava3d" id="ava3d" title="¡Tócame!" style="transform: rotateX(1.91deg) rotateY(-14deg);">
+    <svg class="ava-svg" viewBox="0 0 160 200" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="gFace" cx="42%" cy="35%" r="70%">
+          <stop offset="0%" stop-color="#ffe4c4"></stop><stop offset="55%" stop-color="#f2c79a"></stop><stop offset="100%" stop-color="#c99870"></stop>
+        </radialGradient>
+        <radialGradient id="gHair" cx="50%" cy="25%" r="65%">
+          <stop offset="0%" stop-color="#fbfbfd"></stop><stop offset="55%" stop-color="#d9dce3"></stop><stop offset="100%" stop-color="#8a91a1"></stop>
+        </radialGradient>
+        <linearGradient id="gCoat" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#ffffff"></stop><stop offset="60%" stop-color="#eef0f4"></stop><stop offset="100%" stop-color="#c5c9d2"></stop>
+        </linearGradient>
+        <radialGradient id="gCheek" cx="50%" cy="50%">
+          <stop offset="0%" stop-color="#ea580c" stop-opacity=".45"></stop><stop offset="100%" stop-color="#ea580c" stop-opacity="0"></stop>
+        </radialGradient>
+        <radialGradient id="gShadow" cx="50%" cy="50%">
+          <stop offset="0%" stop-color="#000" stop-opacity=".28"></stop><stop offset="100%" stop-color="#000" stop-opacity="0"></stop>
+        </radialGradient>
+        <radialGradient id="gSpec" cx="35%" cy="28%">
+          <stop offset="0%" stop-color="#fff" stop-opacity=".55"></stop><stop offset="60%" stop-color="#fff" stop-opacity="0"></stop>
+        </radialGradient>
+      </defs>
+      <ellipse cx="80" cy="196" rx="46" ry="5" fill="url(#gShadow)"></ellipse>
+      <path d="M28 200 Q24 142 55 128 L105 128 Q136 142 132 200 Z" fill="url(#gCoat)" stroke="#7b8291" stroke-width="1.3"></path>
+      <path d="M55 128 L80 152 L105 128" fill="#d8dbe2" stroke="#7b8291" stroke-width="1.2"></path>
+      <path d="M80 152 L80 200" stroke="#b9bfca" stroke-width="1.4"></path>
+      <path d="M45 155 Q55 160 52 175" stroke="#c8ccd6" stroke-width="1" fill="none"></path>
+      <path d="M115 155 Q105 160 108 175" stroke="#c8ccd6" stroke-width="1" fill="none"></path>
+      <rect x="42" y="168" width="22" height="20" rx="2.5" fill="#eff1f5" stroke="#7b8291" stroke-width="1.2"></rect>
+      <line x1="49" y1="162" x2="49" y2="171" stroke="#ea580c" stroke-width="2.4" stroke-linecap="round"></line>
+      <line x1="56" y1="162" x2="56" y2="171" stroke="#0891b2" stroke-width="2.4" stroke-linecap="round"></line>
+      <circle cx="80" cy="170" r="2.4" fill="#9aa1b0"></circle>
+      <circle cx="80" cy="180" r="2.4" fill="#9aa1b0"></circle>
+      <circle cx="80" cy="190" r="2.4" fill="#9aa1b0"></circle>
+      <circle cx="106" cy="174" r="9.5" fill="#fff" stroke="#ea580c" stroke-width="1.6"></circle>
+      <circle cx="106" cy="174" r="2.6" fill="#ea580c"></circle>
+      <ellipse cx="106" cy="174" rx="9.5" ry="3.4" fill="none" stroke="#0891b2" stroke-width="1"></ellipse>
+      <ellipse cx="106" cy="174" rx="9.5" ry="3.4" fill="none" stroke="#0891b2" stroke-width="1" transform="rotate(60 106 174)"></ellipse>
+      <path d="M69 108 Q80 118 91 108 L91 128 L69 128 Z" fill="#e8bd93" stroke="#a17a52" stroke-width="1"></path>
+      <ellipse cx="80" cy="78" rx="41" ry="43" fill="url(#gFace)" stroke="#a17a52" stroke-width="1.2"></ellipse>
+      <path d="M100 40 Q120 78 100 116 Q112 100 112 78 Q112 52 100 40 Z" fill="#b98b5e" opacity=".35"></path>
+      <path d="M58 105 Q80 122 102 105 Q98 118 80 120 Q62 118 58 105 Z" fill="#a17a52" opacity=".4"></path>
+      <ellipse cx="66" cy="56" rx="18" ry="14" fill="url(#gSpec)"></ellipse>
+      <ellipse cx="56" cy="94" rx="8" ry="5" fill="url(#gCheek)"></ellipse>
+      <ellipse cx="104" cy="94" rx="8" ry="5" fill="url(#gCheek)"></ellipse>
+      <path d="M40 62 Q22 34 36 14 Q52 -8 68 8 Q82 -14 100 6 Q120 -10 138 16 Q152 32 138 60 Q128 46 112 56 Q100 40 84 54 Q70 42 52 56 Q40 44 40 62 Z" fill="url(#gHair)" stroke="#6b7280" stroke-width="1.2"></path>
+      <path d="M44 24 Q38 8 50 10 Q48 18 52 26" fill="none" stroke="#6b7280" stroke-width="1.8" stroke-linecap="round"></path>
+      <path d="M76 6 Q70 -10 82 -6 Q80 4 84 12" fill="none" stroke="#6b7280" stroke-width="1.8" stroke-linecap="round"></path>
+      <path d="M112 12 Q122 -6 130 6 Q120 12 118 22" fill="none" stroke="#6b7280" stroke-width="1.8" stroke-linecap="round"></path>
+      <path d="M136 34 Q148 26 144 42" fill="none" stroke="#6b7280" stroke-width="1.8" stroke-linecap="round"></path>
+      <path d="M48 56 Q80 40 112 56 Q108 68 80 62 Q52 68 48 56 Z" fill="#8a91a1" opacity=".28"></path>
+      <path d="M56 68 Q68 61 79 68" fill="none" stroke="#6b7280" stroke-width="3.4" stroke-linecap="round"></path>
+      <path d="M81 68 Q92 61 104 68" fill="none" stroke="#6b7280" stroke-width="3.4" stroke-linecap="round"></path>
+      <g class="eyeB">
+        <ellipse cx="68" cy="80" rx="4.6" ry="5.6" fill="#0a0a0f"></ellipse>
+        <ellipse cx="92" cy="80" rx="4.6" ry="5.6" fill="#0a0a0f"></ellipse>
+        <circle cx="69.7" cy="78.4" r="1.6" fill="#fff"></circle>
+        <circle cx="93.7" cy="78.4" r="1.6" fill="#fff"></circle>
+        <circle cx="67" cy="82" r=".9" fill="#fff" opacity=".55"></circle>
+        <circle cx="91" cy="82" r=".9" fill="#fff" opacity=".55"></circle>
+      </g>
+      <path d="M48 75 Q51 73 54 75" fill="none" stroke="#a17a52" stroke-width=".9" opacity=".55"></path>
+      <path d="M106 75 Q109 73 112 75" fill="none" stroke="#a17a52" stroke-width=".9" opacity=".55"></path>
+      <path d="M80 84 Q76 92 74 96 Q80 100 86 96 Q84 92 80 84 Z" fill="#e8bd93" stroke="#a17a52" stroke-width=".9"></path>
+      <path d="M80 92 Q78 96 80 98" fill="none" stroke="#a17a52" stroke-width=".7" opacity=".6"></path>
+      <path d="M50 104 Q62 96 80 104 Q98 96 110 104 Q104 119 80 117 Q56 119 50 104 Z" fill="url(#gHair)" stroke="#6b7280" stroke-width="1"></path>
+      <path d="M56 106 Q68 100 80 106 Q92 100 104 106" fill="none" stroke="#6b7280" stroke-width=".9" opacity=".55"></path>
+      <path d="M56 116 Q80 120 104 116" fill="none" stroke="#a17a52" stroke-width="1.2" opacity=".4"></path>
+      <path d="M66 124 Q80 134 94 124" fill="none" stroke="#5b1e0a" stroke-width="2.2" stroke-linecap="round"></path>
+      <ellipse cx="30" cy="176" rx="11" ry="13" fill="#e8bd93" stroke="#a17a52" stroke-width="1.2"></ellipse>
+      <ellipse cx="130" cy="176" rx="11" ry="13" fill="#e8bd93" stroke="#a17a52" stroke-width="1.2"></ellipse>
+      <ellipse cx="26" cy="172" rx="4" ry="5" fill="#f7d8b8" opacity=".6"></ellipse>
+      <ellipse cx="126" cy="172" rx="4" ry="5" fill="#f7d8b8" opacity=".6"></ellipse>
+    </svg>
+    <div class="shine" id="avaShine" style="--mx: -187.70554699896826%; --my: 39.656479364537766%;"></div>
+  </div>
+</div>
+
+<!-- ═══════════ FABS ═══════════ -->
+<button class="fab t" id="btnTheme" aria-label="Tema"><svg class="ico"><use href="#i-sun" id="thIco"></use></svg></button>
+<button class="fab l" id="btnGh" aria-label="Panel del profesor"><svg class="ico"><use href="#i-lock"></use></svg></button>
+
+<!-- ═══════════ APP ═══════════ -->
+<div id="app">
+
+  <header class="hero">
+    <div class="hero-inner">
+      <span class="badge"><span class="dot"></span>Laboratorio Virtual · Física 10 · Unidad 2</span>
+      <h1>Cinemática:<br>el estudio del movimiento</h1>
+      <p class="lead">MRU, MRUV, caída libre y movimiento de proyectiles. Experimenta, ajusta variables y visualiza las gráficas del movimiento en tiempo real.</p>
+      <div class="cta">
+        <button class="btn pri" data-go="fen1"><svg class="ico"><use href="#i-play"></use></svg> Empezar</button>
+        <button class="btn gh" data-go="resumen"><svg class="ico"><use href="#i-book"></use></svg> Ver resumen</button>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>3</b><span>Fenómenos</span></div>
+        <div class="stat"><b>8</b><span>Ecuaciones</span></div>
+        <div class="stat"><b>100%</b><span>Interactivo</span></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="tabs-wrap">
+    <nav class="tabs" role="tablist">
+      <button class="tab on" data-tab="resumen"><svg class="ico"><use href="#i-book"></use></svg><span class="label">Resumen</span></button>
+      <button class="tab" data-tab="fen1"><svg class="ico"><use href="#i-car"></use></svg><span class="label">MRU</span></button>
+      <button class="tab" data-tab="fen2"><svg class="ico"><use href="#i-speed"></use></svg><span class="label">MRUV</span></button>
+      <button class="tab" data-tab="fen3"><svg class="ico"><use href="#i-parabola"></use></svg><span class="label">Proyectiles</span></button>
+    </nav>
+  </div>
+
+  <main>
+
+    <!-- ═══════ RESUMEN ═══════ -->
+    <section id="resumen" class="panel on">
+      <div class="card">
+        <h2><svg class="ico ico-lg"><use href="#i-book"></use></svg> Resumen · Unidad 2</h2>
+        <p class="nota">Alineado con las clases 2 a 8 del plan de clases y enriquecido con el Libro de Texto de Física 10mo Grado (Tercer Perfeccionamiento).</p>
+        <div class="rgrid">
+          <div class="ri"><b>Movimiento mecánico</b>Cambio de posición de un cuerpo respecto a otros que se toman como <b>sistema de referencia</b>. Es relativo: depende del observador.</div>
+          <div class="ri"><b>Punto material</b>Idealización: se desprecian las dimensiones del cuerpo cuando son muy pequeñas frente a la distancia recorrida.</div>
+          <div class="ri"><b>Trayectoria y desplazamiento</b>Trayectoria: línea que une las posiciones sucesivas. Desplazamiento: vector entre posición inicial y final (Δx = x − x₀).</div>
+          <div class="ri"><b>Rapidez vs velocidad</b>Rapidez: escalar, solo el módulo. Velocidad: vectorial, con dirección y sentido. En el MRU coinciden.</div>
+          <div class="ri"><b>MRU · Movimiento Rectilíneo Uniforme</b>Trayectoria recta y velocidad constante. Recorre distancias iguales en tiempos iguales.
+          <span class="fml">x = x₀ + v·t
+v = Δx / Δt</span></div>
+          <div class="ri"><b>MRUV · Movimiento Rectilíneo Uniformemente Variado</b>Aceleración constante. Velocidad y posición cambian con el tiempo.
+          <span class="fml">a = (v − v₀) / t
+v = v₀ + a·t
+x = x₀ + v₀·t + ½·a·t²
+v² = v₀² + 2·a·Δx</span></div>
+          <div class="ri"><b>Caída libre</b>Caso particular del MRUV con a = g ≈ 9,8 m/s² (o 10 m/s²). Se desprecia el rozamiento con el aire.
+          <span class="fml">v = g·t
+h = ½·g·t²
+v² = 2·g·h</span></div>
+          <div class="ri"><b>Movimiento de proyectiles</b>Composición de dos movimientos independientes: MRU horizontal (vx = v₀·cosθ) y MRUV vertical (vy = v₀·senθ − g·t).
+          <span class="fml">t_vuelo = 2·v₀·senθ / g
+H_max = v₀²·sen²θ / (2g)
+R = v₀²·sen(2θ) / g</span></div>
+          <div class="ri"><b>MCU · Movimiento Circular Uniforme</b>Velocidad angular constante, trayectoria circular.
+          <span class="fml">ω = 2π/T = 2π·f
+v = ω·r
+ac = v²/r = ω²·r</span></div>
+          <div class="ri"><b>Gráficas del movimiento</b><b>x-t:</b> la pendiente es la velocidad.<br><b>v-t:</b> la pendiente es la aceleración y el <b>área</b> es el desplazamiento.</div>
+        </div>
+        <p class="idea"><strong>Idea clave:</strong> en el MRU la velocidad es constante; en el MRUV la aceleración es constante. Toda la información del movimiento está contenida en las gráficas x-t y v-t.</p>
+        <h3>Cuadro comparativo MRU vs MRUV</h3>
+        <div class="tw">
+          <table class="min">
+            <thead><tr><th>Característica</th><th>MRU</th><th>MRUV</th></tr></thead>
+            <tbody>
+              <tr><td>Velocidad</td><td>Constante</td><td>Varía uniformemente</td></tr>
+              <tr><td>Aceleración</td><td>Cero</td><td>Constante ≠ 0</td></tr>
+              <tr><td>Ecuación de posición</td><td>x = x₀ + v·t</td><td>x = x₀ + v₀·t + ½at²</td></tr>
+              <tr><td>Ecuación de velocidad</td><td>v = constante</td><td>v = v₀ + a·t</td></tr>
+              <tr><td>Gráfica x-t</td><td>Recta inclinada</td><td>Parábola</td></tr>
+              <tr><td>Gráfica v-t</td><td>Recta horizontal</td><td>Recta inclinada</td></tr>
+              <tr><td>Área bajo v-t</td><td>Distancia recorrida</td><td>Desplazamiento</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h3>Objetivo de la unidad</h3>
+        <p style="font-size:.86rem">Caracterizar el Movimiento Rectilíneo Uniforme y el Uniformemente Variado a partir de la constancia del vector velocidad o de la aceleración, resolviendo problemas analíticos y gráficos vinculados al transporte y la vida diaria.</p>
+      </div>
+    </section>
+
+    <!-- ═══════ FENÓMENO 1 · MRU ═══════ -->
+    <section id="fen1" class="panel">
+      <div class="card">
+        <h2><svg class="ico ico-lg"><use href="#i-car"></use></svg> Fenómeno 1 · MRU en carretera</h2>
+        <p class="nota">Un auto se desplaza por una carretera recta con <b>velocidad constante</b>. Ajusta los valores y observa cómo se construye la gráfica x-t en tiempo real.</p>
+        <div class="sliders">
+          <div class="sl"><div class="slh"><span>Velocidad (v)</span><span class="v" id="lV">15 m/s</span></div><input type="range" id="rV" min="2" max="30" value="15" step="1"></div>
+          <div class="sl"><div class="slh"><span>Posición inicial (x₀)</span><span class="v" id="lX0">0 m</span></div><input type="range" id="rX0" min="0" max="200" value="0" step="5"></div>
+        </div>
+        <div class="btns-row">
+          <button class="btn pri" id="btnPlayMRU"><svg class="ico"><use href="#i-play"></use></svg> Iniciar</button>
+          <button class="btn gh" id="btnResetMRU"><svg class="ico"><use href="#i-refresh"></use></svg> Reiniciar</button>
+        </div>
+        <div class="canvas-box"><canvas id="cvMRU" width="960" height="570" style="width: 100%; max-width: 640px;"></canvas></div>
+        <div class="reads">
+          <div class="rd"><b>Tiempo</b><span id="rT1">0,0 s</span></div>
+          <div class="rd"><b>Posición</b><span id="rX1">0 m</span></div>
+          <div class="rd"><b>Velocidad</b><span id="rV1">15 m/s</span></div>
+          <div class="rd"><b>Distancia</b><span id="rD1">0 m</span></div>
+        </div>
+        <h3>Ecuaciones del MRU</h3>
+        <span class="fml">x(t) = x₀ + v·t
+v = constante
+d = v·t</span>
+        <p class="idea"><strong>Observa:</strong> la gráfica x-t es una recta cuya pendiente es la velocidad. La gráfica v-t es una recta horizontal. El área bajo v-t es la distancia recorrida.</p>
+      </div>
+    </section>
+
+    <!-- ═══════ FENÓMENO 2 · MRUV ═══════ -->
+    <section id="fen2" class="panel">
+      <div class="card">
+        <h2><svg class="ico ico-lg"><use href="#i-speed"></use></svg> Fenómeno 2 · MRUV (aceleración constante)</h2>
+        <p class="nota">Un móvil parte con velocidad inicial v₀ y acelera constantemente. Ajusta los valores y observa cómo la gráfica v-t es una <b>recta inclinada</b> cuya pendiente es la aceleración.</p>
+        <div class="sliders">
+          <div class="sl"><div class="slh"><span>Velocidad inicial (v₀)</span><span class="v" id="lV0">5 m/s</span></div><input type="range" id="rV0" min="0" max="20" value="5" step="1"></div>
+          <div class="sl"><div class="slh"><span>Aceleración (a)</span><span class="v" id="lA">2 m/s²</span></div><input type="range" id="rA" min="-5" max="5" value="2" step="0.5"></div>
+        </div>
+        <div class="btns-row">
+          <button class="btn pri" id="btnPlayMRUV"><svg class="ico"><use href="#i-play"></use></svg> Iniciar</button>
+          <button class="btn gh" id="btnResetMRUV"><svg class="ico"><use href="#i-refresh"></use></svg> Reiniciar</button>
+        </div>
+        <div class="canvas-box"><canvas id="cvMRUV" width="960" height="570" style="width: 100%; max-width: 640px;"></canvas></div>
+        <div class="reads">
+          <div class="rd"><b>Tiempo</b><span id="rT2">0,0 s</span></div>
+          <div class="rd"><b>Velocidad</b><span id="rV2">5 m/s</span></div>
+          <div class="rd"><b>Posición</b><span id="rX2">0 m</span></div>
+          <div class="rd"><b>Aceleración</b><span id="rA2">2 m/s²</span></div>
+        </div>
+        <h3>Ecuaciones del MRUV</h3>
+        <span class="fml">v = v₀ + a·t
+x = x₀ + v₀·t + ½·a·t²
+v² = v₀² + 2·a·Δx</span>
+        <p class="idea"><strong>Observa:</strong> en la gráfica v-t, la pendiente es la aceleración y el área bajo la recta es el desplazamiento. Si a &lt; 0 y v &gt; 0, el móvil frena.</p>
+      </div>
+    </section>
+
+    <!-- ═══════ FENÓMENO 3 · PROYECTILES ═══════ -->
+    <section id="fen3" class="panel">
+      <div class="card">
+        <h2><svg class="ico ico-lg"><use href="#i-parabola"></use></svg> Fenómeno 3 · Movimiento de proyectiles</h2>
+        <p class="nota">Un proyectil se lanza con velocidad inicial v₀ y ángulo θ. El movimiento es la <b>composición</b> de un MRU horizontal y un MRUV vertical (caída libre). Ajusta y lanza.</p>
+        <div class="sliders">
+          <div class="sl"><div class="slh"><span>Velocidad inicial (v₀)</span><span class="v" id="lVp">25 m/s</span></div><input type="range" id="rVp" min="10" max="45" value="25" step="1"></div>
+          <div class="sl"><div class="slh"><span>Ángulo (θ)</span><span class="v" id="lAng">45°</span></div><input type="range" id="rAng" min="10" max="80" value="45" step="1"></div>
+        </div>
+        <div class="btns-row">
+          <button class="btn pri" id="btnLaunch"><svg class="ico"><use href="#i-play"></use></svg> Lanzar</button>
+          <button class="btn gh" id="btnResetProj"><svg class="ico"><use href="#i-refresh"></use></svg> Reiniciar</button>
+        </div>
+        <div class="canvas-box"><canvas id="cvProj" width="960" height="570" style="width: 100%; max-width: 640px;"></canvas></div>
+        <div class="reads">
+          <div class="rd"><b>Tiempo de vuelo</b><span id="rTv">3,61 s</span></div>
+          <div class="rd"><b>Altura máxima</b><span id="rHm">15,9 m</span></div>
+          <div class="rd"><b>Alcance</b><span id="rRm">63,8 m</span></div>
+          <div class="rd"><b>vx constante</b><span id="rVx">17,7 m/s</span></div>
+        </div>
+        <h3>Ecuaciones del tiro parabólico</h3>
+        <span class="fml">vx = v₀·cos θ   (constante)
+vy = v₀·sen θ − g·t
+x = v₀·cos θ · t
+y = v₀·sen θ · t − ½·g·t²
+
+t_vuelo = 2·v₀·sen θ / g
+H_max = v₀²·sen²θ / (2g)
+Alcance = v₀²·sen(2θ) / g</span>
+        <p class="idea"><strong>Idea clave:</strong> los movimientos horizontal y vertical son <b>independientes</b>. Mientras el proyectil avanza horizontalmente con velocidad constante, cae verticalmente como un objeto en caída libre.</p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  Laboratorio Virtual · Física 10.° Grado · Unidad 2: Cinemática<br>
+  <b>Prof. Isniel Portela Hernández</b> · Tercer Perfeccionamiento
+</footer>
+
+<!-- ═══════════ MODAL GITHUB ═══════════ -->
+<div class="modal" id="ghM">
+  <div class="mbox">
+    <button class="mclose" id="ghX" aria-label="Cerrar"><svg class="ico"><use href="#i-x"></use></svg></button>
+    <h2 style="margin-bottom:8px;display:flex;align-items:center;gap:10px"><svg class="ico ico-lg"><use href="#i-lock"></use></svg> Publicar en GitHub Pages</h2>
+    <p class="nota">Usa un token clásico con scope <b>repo</b>. Viaja directo a <code style="font-family:'JetBrains Mono',monospace;font-size:.75rem">api.github.com</code> por HTTPS. No se guarda ni se publica.</p>
+    <details style="margin:10px 0;padding:10px 12px;background:var(--surf-2);border:1px solid var(--line);border-radius:10px">
+      <summary style="cursor:pointer;font-weight:700;font-size:.82rem">¿Cómo crear el token clásico?</summary>
+      <ol style="margin:8px 0 0 18px;font-size:.78rem;line-height:1.8;color:var(--text-2)">
+        <li>Abre <a href="https://github.com/settings/tokens/new?scopes=repo&amp;description=Lab%20Fisica%2010%20U2" target="_blank" rel="noopener" style="color:var(--acc)">GitHub → Generate new token (classic)</a>.</li>
+        <li>Nombre: Lab Física 10 U2. Expiración: 7 días.</li>
+        <li>Marca solo el scope <b>repo</b>.</li>
+        <li>Pulsa <b>Generate token</b> y copia la clave <code>ghp_…</code>.</li>
+      </ol>
+    </details>
+    <div class="gh-grid">
+      <div class="fld"><label for="ghU">Usuario GitHub *</label><input id="ghU" placeholder="tu-usuario" autocomplete="off"></div>
+      <div class="fld"><label for="ghR">Repositorio *</label><input id="ghR" value="laboratorio-fisica-10-u2" autocomplete="off"></div>
+      <div class="fld"><label for="ghT">Token clásico *</label>
+        <div class="pwd">
+          <input id="ghT" type="text" placeholder="ghp_..." autocomplete="off">
+          <button id="ghEye" type="button" aria-label="Mostrar"><svg class="ico"><use href="#i-eye"></use></svg></button>
+        </div>
+      </div>
+      <div class="fld"><label for="ghMs">Mensaje del commit</label><input id="ghMs" value="Publicación del Laboratorio Virtual Unidad 2 — Cinemática" autocomplete="off"></div>
+    </div>
+    <label style="display:flex;gap:8px;align-items:center;margin:8px 0;cursor:pointer;font-size:.8rem">
+      <input type="checkbox" id="ghCr" checked="" style="width:16px;height:16px;accent-color:var(--acc)"> Crear repositorio automáticamente
+    </label>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn pri" id="ghPub" disabled=""><svg class="ico"><use href="#i-rocket"></use></svg> Publicar</button>
+      <button class="btn gh" id="ghTest">Probar token</button>
+    </div>
+    <div id="ghLog" class=""></div>
+    <div id="ghDone"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+'use strict';
+var API='https://api.github.com';
+var $=function(id){return document.getElementById(id);};
+var isMobile=/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+var reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var raf=window.requestAnimationFrame||function(cb){return setTimeout(cb,16);};
+var G=9.8;
+
+/* ═══ TEMA ═══ */
+(function(){
+  var html=document.documentElement;
+  var btn=$('btnTheme'), ico=$('thIco');
+  function set(t){
+    html.setAttribute('data-theme',t);
+    ico.setAttribute('href',t==='dark'?'#i-sun':'#i-moon');
+    var m=document.querySelector('meta[name=theme-color]');
+    if(m)m.setAttribute('content',t==='dark'?'#0c1220':'#fbfaf7');
+  }
+  var g=null;try{g=localStorage.getItem('labu2-theme');}catch(e){}
+  set(g||(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'));
+  btn.addEventListener('click',function(){
+    var n=html.getAttribute('data-theme')==='dark'?'light':'dark';
+    set(n);try{localStorage.setItem('labu2-theme',n);}catch(e){}
+    say(n==='dark'?'Modo noche: ideal para estudiar.':'Modo día: ¡a la luz del sol!',null,1200);
+  });
+})();
+
+/* ═══ ESTRELLAS ═══ */
+(function(){
+  var cv=$('stars');if(!cv)return;
+  var ctx=cv.getContext('2d');
+  var DPR=Math.min(window.devicePixelRatio||1,1.5);
+  var W=0,H=0,ps=[];
+  function resize(){
+    W=window.innerWidth;H=window.innerHeight;
+    cv.width=W*DPR;cv.height=H*DPR;
+    cv.style.width=W+'px';cv.style.height=H+'px';
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    var n=isMobile?14:Math.min(40,Math.floor(W*H/32000));
+    ps=[];
+    for(var i=0;i<n;i++)ps.push({
+      x:Math.random()*W,y:Math.random()*H,
+      r:Math.random()*1.4+.4,
+      vx:(Math.random()-.5)*.15,
+      vy:(Math.random()-.5)*.15,
+      a:Math.random()*.55+.2
+    });
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    var dark=document.documentElement.getAttribute('data-theme')==='dark';
+    var c=dark?'255,220,190':'120,60,20';
+    for(var i=0;i<ps.length;i++){
+      var p=ps[i];
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.283);
+      ctx.fillStyle='rgba('+c+','+p.a+')';ctx.fill();
+      if(!reduced){p.x+=p.vx;p.y+=p.vy;
+        if(p.x<0||p.x>W)p.vx*=-1;
+        if(p.y<0||p.y>H)p.vy*=-1;}
+    }
+    raf(draw);
+  }
+  resize();window.addEventListener('resize',resize);draw();
+})();
+
+/* ═══ AVATAR 3D ═══ */
+var ava=$('ava3d'),bubble=$('avaBubble'),shine=$('avaShine');
+var bTimer=null;
+var targetRX=0,targetRY=0,currentRX=0,currentRY=0,rafId=null;
+
+function say(txt,state,dur){
+  if(!bubble)return;
+  bubble.textContent=txt;
+  bubble.style.animation='none';void bubble.offsetWidth;
+  bubble.style.animation='bIn .3s ease';
+  if(bTimer)clearTimeout(bTimer);
+  if(state){
+    ava.classList.remove('happy','sad','think');
+    void ava.offsetWidth;
+    ava.classList.add(state);
+    setTimeout(function(){ava.classList.remove(state);},dur||1400);
+  }
+}
+window.say=say;
+
+function moverAva(cx,cy){
+  var r=ava.getBoundingClientRect();
+  var dx=(cx-(r.left+r.width/2))/r.width;
+  var dy=(cy-(r.top+r.height/2))/r.height;
+  targetRY=Math.max(-14,Math.min(14,dx*22));
+  targetRX=Math.max(-12,Math.min(12,-dy*18));
+  if(shine)shine.style.setProperty('--mx',((cx-r.left)/r.width*100)+'%');
+  if(shine)shine.style.setProperty('--my',((cy-r.top)/r.height*100)+'%');
+}
+function resetAva(){targetRX=0;targetRY=0;}
+
+if('onmousemove' in window){
+  document.addEventListener('mousemove',function(e){
+    if(reduced)return;moverAva(e.clientX,e.clientY);
+    if(!rafId)animateAva();
+  },{passive:true});
+  document.addEventListener('mouseleave',resetAva);
+}
+document.addEventListener('touchmove',function(e){
+  if(reduced||!e.touches[0])return;
+  var r=ava.getBoundingClientRect(),t=e.touches[0];
+  if(t.clientX>r.left-80&&t.clientX<r.right+80&&t.clientY>r.top-60&&t.clientY<r.bottom+60){
+    moverAva(t.clientX,t.clientY);
+    if(!rafId)animateAva();
+  }
+},{passive:true});
+document.addEventListener('touchend',resetAva,{passive:true});
+
+function animateAva(){
+  currentRX+=(targetRX-currentRX)*.12;
+  currentRY+=(targetRY-currentRY)*.12;
+  ava.style.transform='rotateX('+currentRX.toFixed(2)+'deg) rotateY('+currentRY.toFixed(2)+'deg)';
+  if(Math.abs(targetRX-currentRX)>.05||Math.abs(targetRY-currentRY)>.05){rafId=raf(animateAva);}
+  else{rafId=null;if(Math.abs(currentRX)<.1&&Math.abs(currentRY)<.1)ava.style.transform='';}
+}
+if(ava){
+  ava.addEventListener('click',function(){
+    var fr=[
+      '¡La imaginación es más importante que el conocimiento!',
+      'En MRU, x = x₀ + v·t. ¡Pendiente de la recta!',
+      'La caída libre es un MRUV con a = g.',
+      '¡Los movimientos horizontal y vertical son independientes!',
+      'Un experimento vale más que mil teorías.',
+      '¡Sigue así, futuro científico!'
+    ];
+    say(fr[Math.floor(Math.random()*fr.length)],'happy',1600);
+    var t0=Date.now();
+    (function shake(){
+      var dt=(Date.now()-t0)/1000;
+      if(dt<.7){
+        var s=Math.sin(dt*22)*8*(1-dt/0.7);
+        ava.style.transform='rotateY('+(currentRY+s).toFixed(2)+'deg) rotateX('+currentRX.toFixed(2)+'deg)';
+        raf(shake);
+      }else animateAva();
+    })();
+  });
+}
+var FRASES=[
+  'La cinemática estudia el movimiento sin preguntar por las causas.',
+  'En MRUV, la gráfica v-t es una recta cuya pendiente es la aceleración.',
+  'La velocidad es un vector: módulo, dirección y sentido.',
+  'El área bajo la gráfica v-t es el desplazamiento.',
+  'En caída libre, todos los cuerpos caen con la misma aceleración.'
+];
+var idxF=0;
+setInterval(function(){
+  if(document.hidden)return;
+  idxF=(idxF+1)%FRASES.length;
+  say(FRASES[idxF],null,1400);
+},11000);
+
+/* ═══ CONFETI ═══ */
+function confeti(){
+  if(reduced)return;
+  var col=['#ea580c','#0891b2','#f59e0b','#10b981','#ef4444','#ec4899'];
+  var n=isMobile?25:40;
+  for(var i=0;i<n;i++){
+    (function(i){
+      setTimeout(function(){
+        var c=document.createElement('div');
+        c.className='conf';
+        c.style.left=(Math.random()*100)+'vw';
+        c.style.background=col[Math.floor(Math.random()*col.length)];
+        c.style.animation='fall '+(1.8+Math.random()*1.4)+'s ease forwards';
+        c.style.transform='rotate('+(Math.random()*360)+'deg)';
+        document.body.appendChild(c);
+        setTimeout(function(){c.remove();},3800);
+      },i*22);
+    })(i);
+  }
+}
+
+/* ═══ TABS ═══ */
+var tips={
+  resumen:'Aquí tienes el resumen teórico de Cinemática.',
+  fen1:'MRU: la velocidad es constante. Observa la recta x-t.',
+  fen2:'MRUV: la aceleración es constante. Observa la recta v-t.',
+  fen3:'Proyectiles: composición de MRU horizontal y caída libre vertical.'
+};
+document.querySelectorAll('.tab').forEach(function(b){
+  b.addEventListener('click',function(){
+    document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('on');});
+    document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on');});
+    b.classList.add('on');
+    $(b.dataset.tab).classList.add('on');
+    window.scrollTo({top:0,behavior:'smooth'});
+    say(tips[b.dataset.tab]||'¡Adelante!',null,1400);
+    if(b.dataset.tab==='fen1')drawMRU();
+    if(b.dataset.tab==='fen2')drawMRUV();
+    if(b.dataset.tab==='fen3')drawProj();
+  });
+});
+document.querySelectorAll('[data-go]').forEach(function(b){
+  b.addEventListener('click',function(){
+    document.querySelector('.tab[data-tab="'+b.dataset.go+'"]').click();
+  });
+});
+
+/* ═══ UTILS CANVAS ═══ */
+var DPR=Math.min(window.devicePixelRatio||1,1.5);
+function fmt(n,d){var p=Math.pow(10,d);return (Math.round(n*p)/p).toString().replace('.',',');}
+function arrow(c,x1,y1,x2,y2,color,w){
+  w=w||2.5;
+  var dx=x2-x1,dy=y2-y1;
+  var len=Math.sqrt(dx*dx+dy*dy);
+  if(len<2)return;
+  var ang=Math.atan2(dy,dx);
+  var h=Math.min(11,len*.35);
+  c.strokeStyle=color;c.fillStyle=color;c.lineWidth=w;c.lineCap='round';
+  c.beginPath();c.moveTo(x1,y1);c.lineTo(x2-Math.cos(ang)*h*.6,y2-Math.sin(ang)*h*.6);c.stroke();
+  c.beginPath();
+  c.moveTo(x2,y2);
+  c.lineTo(x2-h*Math.cos(ang-Math.PI/6),y2-h*Math.sin(ang-Math.PI/6));
+  c.lineTo(x2-h*Math.cos(ang+Math.PI/6),y2-h*Math.sin(ang+Math.PI/6));
+  c.closePath();c.fill();
+}
+function setupCanvas(cv){
+  var W=640,H=380;
+  cv.width=W*DPR;cv.height=H*DPR;
+  cv.style.width='100%';cv.style.maxWidth=W+'px';
+  var ctx=cv.getContext('2d');
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+  return {ctx:ctx,W:W,H:H};
+}
+
+/* ═══ FENÓMENO 1 · MRU ═══ */
+var mru=setupCanvas($('cvMRU'));
+var mruPlaying=false,mruT=0,mruStart=0,mruX0=0,mruV=15,mruTrail=[];
+var ROAD_L=600; /* metros visibles */
+
+function drawMRU(){
+  var ctx=mru.ctx,W=mru.W,H=mru.H;
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
+
+  /* Pista (mitad superior) */
+  var roadY=90,roadH=60;
+  ctx.fillStyle='#f1f5f9';ctx.fillRect(20,roadY,W-40,roadH);
+  ctx.strokeStyle='#cbd5e1';ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(20,roadY);ctx.lineTo(W-20,roadY);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(20,roadY+roadH);ctx.lineTo(W-20,roadY+roadH);ctx.stroke();
+  /* líneas discontinuas */
+  ctx.strokeStyle='#fbbf24';ctx.lineWidth=2;ctx.setLineDash([15,12]);
+  ctx.beginPath();ctx.moveTo(20,roadY+roadH/2);ctx.lineTo(W-20,roadY+roadH/2);ctx.stroke();
+  ctx.setLineDash([]);
+  /* marcas cada 50 m */
+  ctx.fillStyle='#94a3b8';ctx.font='600 10px Inter,sans-serif';ctx.textAlign='center';
+  for(var m=0;m<=600;m+=50){
+    var px=20+(m/600)*(W-40);
+    ctx.fillRect(px,roadY+roadH,1,6);
+    ctx.fillText(m,px,roadY+roadH+18);
+  }
+  ctx.textAlign='left';
+  ctx.fillStyle='#64748b';ctx.font='700 11px Inter,sans-serif';
+  ctx.fillText('x (m)',W-50,roadY+roadH+30);
+
+  /* Auto */
+  var posX=20+((mruX0+mruV*(mruPlaying?(performance.now()-mruStart)/1000:0))/ROAD_L)*(W-40);
+  posX=Math.max(30,Math.min(W-40,posX));
+  ctx.fillStyle='#ea580c';ctx.strokeStyle='#9a3412';ctx.lineWidth=2;
+  ctx.beginPath();
+  if(ctx.roundRect)ctx.roundRect(posX-22,roadY+15,44,26,5);
+  else ctx.rect(posX-22,roadY+15,44,26);
+  ctx.fill();ctx.stroke();
+  /* ventanas */
+  ctx.fillStyle='#7dd3fc';
+  ctx.fillRect(posX-15,roadY+19,12,10);
+  ctx.fillRect(posX+3,roadY+19,12,10);
+  /* ruedas */
+  ctx.fillStyle='#1e293b';
+  ctx.beginPath();ctx.arc(posX-12,roadY+44,5,0,6.283);ctx.fill();
+  ctx.beginPath();ctx.arc(posX+12,roadY+44,5,0,6.283);ctx.fill();
+  /* flecha de velocidad */
+  arrow(ctx,posX+24,roadY+28,posX+24+mruV*1.6,roadY+28,'#0891b2',2.5);
+  ctx.fillStyle='#0891b2';ctx.font='700 11px Inter,sans-serif';
+  ctx.fillText('v',posX+24+mruV*.8-3,roadY+24);
+
+  /* Gráfica x-t (mitad inferior) */
+  var gx=70,gy=210,gw=W-110,gh=140;
+  ctx.strokeStyle='#e2e8f0';ctx.lineWidth=1;
+  for(var i=0;i<=4;i++){
+    var yy=gy+gh*i/4;
+    ctx.beginPath();ctx.moveTo(gx,yy);ctx.lineTo(gx+gw,yy);ctx.stroke();
+  }
+  ctx.strokeStyle='#64748b';ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(gx,gy);ctx.lineTo(gx,gy+gh);ctx.lineTo(gx+gw,gy+gh);ctx.stroke();
+  ctx.fillStyle='#64748b';ctx.font='600 11px Inter,sans-serif';
+  ctx.fillText('x (m)',gx-42,gy+8);
+  ctx.fillText('t (s)',gx+gw-22,gy+gh+16);
+  /* puntos y recta x-t */
+  var tMax=20;
+  ctx.strokeStyle='#ea580c';ctx.lineWidth=2.5;
+  ctx.beginPath();
+  for(var i=0;i<=100;i++){
+    var t=(i/100)*tMax;
+    var x=mruX0+mruV*t;
+    var px=gx+(t/tMax)*gw;
+    var py=gy+gh-(x/(mruV*tMax+50))*gh;
+    if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);
+  }
+  ctx.stroke();
+  /* punto en t actual */
+  if(mruPlaying){
+    var tAct=(performance.now()-mruStart)/1000;
+    if(tAct>tMax)tAct=tMax;
+    var xAct=mruX0+mruV*tAct;
+    var pxA=gx+(tAct/tMax)*gw;
+    var pyA=gy+gh-(xAct/(mruV*tMax+50))*gh;
+    ctx.fillStyle='#ea580c';
+    ctx.beginPath();ctx.arc(pxA,pyA,5,0,6.283);ctx.fill();
+    ctx.strokeStyle='#fff';ctx.lineWidth=1.5;ctx.stroke();
+  }
+  /* título gráfica */
+  ctx.fillStyle='#0f172a';ctx.font='700 11px Inter,sans-serif';
+  ctx.fillText('Gráfica x-t (pendiente = velocidad)',gx,gy-8);
+
+  /* etiquetas auto */
+  ctx.fillStyle='#1e293b';ctx.font='700 12px Inter,sans-serif';
+  ctx.fillText('t = '+fmt(mruPlaying?(performance.now()-mruStart)/1000:0,1)+' s',20,30);
+  ctx.fillText('x = '+fmt(mruX0+mruV*(mruPlaying?(performance.now()-mruStart)/1000:0),1)+' m',20,48);
+}
+
+function loopMRU(){
+  if(mruPlaying){
+    var t=(performance.now()-mruStart)/1000;
+    var x=mruX0+mruV*t;
+    $('rT1').textContent=fmt(t,1)+' s';
+    $('rX1').textContent=fmt(x,1)+' m';
+    $('rV1').textContent=mruV+' m/s';
+    $('rD1').textContent=fmt(mruV*t,1)+' m';
+    drawMRU();
+    if(x>=ROAD_L||t>=20){mruPlaying=false;$('btnPlayMRU').innerHTML='<svg class="ico"><use href="#i-play"/></svg> Iniciar';return;}
+  }
+  raf(loopMRU);
+}
+
+$('rV').addEventListener('input',function(){
+  mruV=+this.value;
+  $('lV').textContent=mruV+' m/s';
+  $('rV1').textContent=mruV+' m/s';
+  if(!mruPlaying)drawMRU();
+});
+$('rX0').addEventListener('input',function(){
+  mruX0=+this.value;
+  $('lX0').textContent=mruX0+' m';
+  if(!mruPlaying)drawMRU();
+});
+$('btnPlayMRU').addEventListener('click',function(){
+  if(mruPlaying){mruPlaying=false;this.innerHTML='<svg class="ico"><use href="#i-play"/></svg> Iniciar';}
+  else{
+    if(mruX0+mruV*20>ROAD_L)mruX0=0;
+    mruStart=performance.now()-((mruT)*1000);
+    mruPlaying=true;
+    this.innerHTML='<svg class="ico"><use href="#i-pause"/></svg> Pausar';
+    say('MRU: velocidad constante. ¡Observa la recta!',null,1400);
+  }
+});
+$('btnResetMRU').addEventListener('click',function(){
+  mruPlaying=false;mruT=0;
+  $('btnPlayMRU').innerHTML='<svg class="ico"><use href="#i-play"/></svg> Iniciar';
+  $('rT1').textContent='0,0 s';$('rX1').textContent=mruX0+' m';
+  $('rV1').textContent=mruV+' m/s';$('rD1').textContent='0 m';
+  drawMRU();
+  say('Todo listo. Ajusta v y x₀, luego inicia.',null,1200);
+});
+loopMRU();
+
+/* ═══ FENÓMENO 2 · MRUV ═══ */
+var mruv=setupCanvas($('cvMRUV'));
+var mruvPlaying=false,mruvStart=0,mruvV0=5,mruvA=2,mruvTMax=10;
+
+function drawMRUV(){
+  var ctx=mruv.ctx,W=mruv.W,H=mruv.H;
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
+
+  /* Pista */
+  var roadY=60,roadH=45;
+  ctx.fillStyle='#f1f5f9';ctx.fillRect(20,roadY,W-40,roadH);
+  ctx.strokeStyle='#cbd5e1';ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(20,roadY);ctx.lineTo(W-20,roadY);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(20,roadY+roadH);ctx.lineTo(W-20,roadY+roadH);ctx.stroke();
+  ctx.strokeStyle='#fbbf24';ctx.lineWidth=2;ctx.setLineDash([15,12]);
+  ctx.beginPath();ctx.moveTo(20,roadY+roadH/2);ctx.lineTo(W-20,roadY+roadH/2);ctx.stroke();
+  ctx.setLineDash([]);
+
+  /* Cálculo de posición */
+  var t=mruvPlaying?(performance.now()-mruvStart)/1000:0;
+  if(t>mruvTMax){mruvPlaying=false;t=mruvTMax;$('btnPlayMRUV').innerHTML='<svg class="ico"><use href="#i-play"/></svg> Iniciar';}
+  var x=mruvV0*t+0.5*mruvA*t*t;
+  var xMax=Math.max(50,mruvV0*mruvTMax+0.5*Math.abs(mruvA)*mruvTMax*mruvTMax);
+  var px=20+(x/xMax)*(W-40);
+  px=Math.max(30,Math.min(W-40,px));
+
+  /* Auto */
+  ctx.fillStyle='#ea580c';ctx.strokeStyle='#9a3412';ctx.lineWidth=2;
+  ctx.beginPath();
+  if(ctx.roundRect)ctx.roundRect(px-20,roadY+10,40,24,5);
+  else ctx.rect(px-20,roadY+10,40,24);
+  ctx.fill();ctx.stroke();
+  ctx.fillStyle='#7dd3fc';
+  ctx.fillRect(px-13,roadY+14,11,9);
+  ctx.fillRect(px+3,roadY+14,11,9);
+  ctx.fillStyle='#1e293b';
+  ctx.beginPath();ctx.arc(px-10,roadY+36,4.5,0,6.283);ctx.fill();
+  ctx.beginPath();ctx.arc(px+10,roadY+36,4.5,0,6.283);ctx.fill();
+
+  /* Gráfica v-t */
+  var gx=70,gy=160,gw=W-110,gh=180;
+  ctx.strokeStyle='#e2e8f0';ctx.lineWidth=1;
+  for(var i=0;i<=4;i++){
+    var yy=gy+gh*i/4;
+    ctx.beginPath();ctx.moveTo(gx,yy);ctx.lineTo(gx+gw,yy);ctx.stroke();
+  }
+  ctx.strokeStyle='#64748b';ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(gx,gy);ctx.lineTo(gx,gy+gh);ctx.lineTo(gx+gw,gy+gh);ctx.stroke();
+  ctx.fillStyle='#64748b';ctx.font='600 11px Inter,sans-serif';
+  ctx.fillText('v (m/s)',gx-48,gy+8);
+  ctx.fillText('t (s)',gx+gw-22,gy+gh+16);
+
+  /* Escala vertical: max(|v|) */
+  var vMax=Math.max(2,Math.abs(mruvV0),Math.abs(mruvV0+mruvA*mruvTMax))*1.15;
+
+  /* Recta v-t */
+  ctx.strokeStyle='#0891b2';ctx.lineWidth=2.5;
+  ctx.beginPath();
+  for(var i=0;i<=100;i++){
+    var tt=(i/100)*mruvTMax;
+    var vv=mruvV0+mruvA*tt;
+    var pxx=gx+(tt/mruvTMax)*gw;
+    var pyy=gy+gh-(vv/vMax)*gh;
+    if(i===0)ctx.moveTo(pxx,pyy);else ctx.lineTo(pxx,pyy);
+  }
+  ctx.stroke();
+
+  /* Relleno del área bajo la recta hasta t actual */
+  if(t>0){
+    ctx.fillStyle='rgba(8,145,178,.15)';
+    ctx.beginPath();
+    ctx.moveTo(gx,gy+gh);
+    for(var i=0;i<=100;i++){
+      var tt=(i/100)*t;
+      var vv=mruvV0+mruvA*tt;
+      var pxx=gx+(tt/mruvTMax)*gw;
+      var pyy=gy+gh-(vv/vMax)*gh;
+      ctx.lineTo(pxx,pyy);
+    }
+    ctx.lineTo(gx+(t/mruvTMax)*gw,gy+gh);
+    ctx.closePath();ctx.fill();
+  }
+
+  /* Punto en t actual */
+  if(t>0){
+    var vAct=mruvV0+mruvA*t;
+    var pActX=gx+(t/mruvTMax)*gw;
+    var pActY=gy+gh-(vAct/vMax)*gh;
+    ctx.fillStyle='#0891b2';
+    ctx.beginPath();ctx.arc(pActX,pActY,5,0,6.283);ctx.fill();
+    ctx.strokeStyle='#fff';ctx.lineWidth=1.5;ctx.stroke();
+  }
+
+  ctx.fillStyle='#0f172a';ctx.font='700 11px Inter,sans-serif';
+  ctx.fillText('Gráfica v-t (pendiente = aceleración, área = desplazamiento)',gx,gy-8);
+
+  /* Flecha de aceleración */
+  if(mruvA!==0){
+    ctx.fillStyle=mruvA>0?'#ea580c':'#ef4444';
+    ctx.font='700 11px Inter,sans-serif';
+    ctx.fillText('a = '+fmt(mruvA,1)+' m/s² →',20,H-15);
+  }
+}
+
+function loopMRUV(){
+  if(mruvPlaying){
+    var t=(performance.now()-mruvStart)/1000;
+    if(t>mruvTMax)t=mruvTMax;
+    var v=mruvV0+mruvA*t;
+    var x=mruvV0*t+0.5*mruvA*t*t;
+    $('rT2').textContent=fmt(t,1)+' s';
+    $('rV2').textContent=fmt(v,1)+' m/s';
+    $('rX2').textContent=fmt(x,1)+' m';
+    $('rA2').textContent=fmt(mruvA,1)+' m/s²';
+    drawMRUV();
+  }
+  raf(loopMRUV);
+}
+
+$('rV0').addEventListener('input',function(){
+  mruvV0=+this.value;$('lV0').textContent=mruvV0+' m/s';
+  if(!mruvPlaying)drawMRUV();
+});
+$('rA').addEventListener('input',function(){
+  mruvA=+this.value;$('lA').textContent=fmt(mruvA,1)+' m/s²';
+  if(!mruvPlaying)drawMRUV();
+});
+$('btnPlayMRUV').addEventListener('click',function(){
+  if(mruvPlaying){mruvPlaying=false;this.innerHTML='<svg class="ico"><use href="#i-play"/></svg> Iniciar';}
+  else{
+    mruvStart=performance.now();mruvPlaying=true;
+    this.innerHTML='<svg class="ico"><use href="#i-pause"/></svg> Pausar';
+    say('MRUV: velocidad uniformemente variada. ¡Observa la recta v-t!',null,1400);
+  }
+});
+$('btnResetMRUV').addEventListener('click',function(){
+  mruvPlaying=false;
+  $('btnPlayMRUV').innerHTML='<svg class="ico"><use href="#i-play"/></svg> Iniciar';
+  $('rT2').textContent='0,0 s';$('rV2').textContent=mruvV0+' m/s';$('rX2').textContent='0 m';
+  drawMRUV();
+  say('Ajusta v₀ y a, luego inicia.',null,1200);
+});
+loopMRUV();
+drawMRUV();
+
+/* ═══ FENÓMENO 3 · PROYECTILES ═══ */
+var proj=setupCanvas($('cvProj'));
+var projPlaying=false,projStart=0,projV0=25,projAng=45,projTrail=[];
+var projTMax=0,tv=0,Hm=0,Rm=0,Vx=0;
+
+function drawProj(){
+  var ctx=proj.ctx,W=proj.W,H=proj.H;
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
+
+  /* Calcular parámetros */
+  var rad=projAng*Math.PI/180;
+  var vx=projV0*Math.cos(rad);
+  var vy0=projV0*Math.sin(rad);
+  tv=2*vy0/G;
+  Hm=(vy0*vy0)/(2*G);
+  Rm=(projV0*projV0*Math.sin(2*rad))/G;
+  Vx=vx;
+  projTMax=tv;
+
+  /* Área del gráfico */
+  var padX=50,padY=40;
+  var gw=W-padX-30, gh=H-padY-50;
+
+  /* Escala */
+  var sxMax=Math.max(Rm,10);
+  var syMax=Math.max(Hm,5);
+  var kx=gw/sxMax, ky=gh/syMax;
+  var k=Math.min(kx,ky);
+
+  /* Suelo */
+  var y0=H-50;
+  ctx.strokeStyle='#94a3b8';ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(padX,y0);ctx.lineTo(W-20,y0);ctx.stroke();
+  ctx.fillStyle='#64748b';ctx.font='600 11px Inter,sans-serif';
+  ctx.fillText('x (m)',W-45,y0+18);
+  /* eje y */
+  ctx.beginPath();ctx.moveTo(padX,y0);ctx.lineTo(padX,20);ctx.stroke();
+  ctx.fillText('y (m)',padX+6,18);
+
+  /* Trayectoria completa */
+  ctx.strokeStyle='#c7d2fe';ctx.lineWidth=1.5;ctx.setLineDash([4,4]);
+  ctx.beginPath();
+  for(var i=0;i<=100;i++){
+    var t=tv*i/100;
+    var x=vx*t;
+    var y=vy0*t-0.5*G*t*t;
+    var px=padX+x*k;
+    var py=y0-y*k;
+    if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);
+  }
+  ctx.stroke();ctx.setLineDash([]);
+
+  /* Cañón en el origen */
+  ctx.save();
+  ctx.translate(padX,y0);
+  ctx.rotate(-rad);
+  ctx.fillStyle='#ea580c';
+  ctx.fillRect(0,-6,26,12);
+  ctx.restore();
+  ctx.fillStyle='#7c2d12';
+  ctx.beginPath();ctx.arc(padX,y0,7,0,6.283);ctx.fill();
+
+  /* Proyectil en movimiento */
+  var tAct=0;
+  if(projPlaying){
+    tAct=(performance.now()-projStart)/1000;
+    if(tAct>tv){tAct=tv;projPlaying=false;$('btnLaunch').innerHTML='<svg class="ico"><use href="#i-play"/></svg> Lanzar';}
+  }
+
+  /* Rastro */
+  ctx.strokeStyle='#ea580c';ctx.lineWidth=2.5;
+  ctx.beginPath();
+  var nPuntos=Math.floor(tAct/tv*100);
+  for(var i=0;i<=nPuntos;i++){
+    var t=tv*i/100;
+    var x=vx*t,y=vy0*t-0.5*G*t*t;
+    var px=padX+x*k,py=y0-y*k;
+    if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);
+  }
+  ctx.stroke();
+
+  /* Posición actual */
+  var xA=vx*tAct, yA=vy0*tAct-0.5*G*tAct*tAct;
+  var pA=padX+xA*k, pB=y0-yA*k;
+  ctx.fillStyle='#ea580c';
+  ctx.beginPath();ctx.arc(pA,pB,6,0,6.283);ctx.fill();
+  ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
+
+  /* Vectores de velocidad */
+  if(projPlaying||tAct>0){
+    var vyA=vy0-G*tAct;
+    var esc=1.2;
+    arrow(ctx,pA,pB,pA+vx*esc,pB,'#0891b2',2.5);
+    arrow(ctx,pA,pB,pA,pB-vyA*esc,'#10b981',2.5);
+    arrow(ctx,pA,pB,pA+vx*esc,pB-vyA*esc,'#ea580c',3);
+    ctx.font='700 10px Inter,sans-serif';
+    ctx.fillStyle='#0891b2';ctx.fillText('vx',pA+vx*esc+3,pB+3);
+    ctx.fillStyle='#10b981';ctx.fillText('vy',pA-22,pB-vyA*esc/2);
+    ctx.fillStyle='#ea580c';ctx.fillText('v',pA+vx*esc/2+3,pB-vyA*esc/2-3);
+  }
+
+  /* Etiquetas de altura máxima y alcance */
+  if(Hm>0){
+    var pxH=padX+(Rm/2)*k;
+    var pyH=y0-Hm*k;
+    ctx.strokeStyle='rgba(100,116,139,.4)';ctx.lineWidth=1;ctx.setLineDash([3,3]);
+    ctx.beginPath();ctx.moveTo(pxH,pyH);ctx.lineTo(pxH,y0);ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle='#64748b';ctx.font='600 10px Inter,sans-serif';
+    ctx.fillText('H_max='+fmt(Hm,1)+' m',pxH-40,pyH-4);
+  }
+}
+
+function updateProjReadouts(){
+  $('rTv').textContent=fmt(tv,2)+' s';
+  $('rHm').textContent=fmt(Hm,1)+' m';
+  $('rRm').textContent=fmt(Rm,1)+' m';
+  $('rVx').textContent=fmt(Vx,1)+' m/s';
+}
+
+$('rVp').addEventListener('input',function(){
+  projV0=+this.value;$('lVp').textContent=projV0+' m/s';
+  drawProj();updateProjReadouts();
+});
+$('rAng').addEventListener('input',function(){
+  projAng=+this.value;$('lAng').textContent=projAng+'°';
+  drawProj();updateProjReadouts();
+});
+$('btnLaunch').addEventListener('click',function(){
+  if(projPlaying){projPlaying=false;this.innerHTML='<svg class="ico"><use href="#i-play"/></svg> Lanzar';}
+  else{
+    projStart=performance.now();projPlaying=true;
+    this.innerHTML='<svg class="ico"><use href="#i-pause"/></svg> Pausar';
+    say('¡Observa: MRU horizontal + caída libre vertical!',null,1600);
+  }
+});
+$('btnResetProj').addEventListener('click',function(){
+  projPlaying=false;
+  $('btnLaunch').innerHTML='<svg class="ico"><use href="#i-play"/></svg> Lanzar';
+  drawProj();updateProjReadouts();
+  say('Ajusta v₀ y θ, luego lanza.',null,1200);
+});
+
+function loopProj(){
+  if(projPlaying)drawProj();
+  raf(loopProj);
+}
+loopProj();
+drawProj();updateProjReadouts();
+
+/* Resize canvases */
+var rTimer=null;
+window.addEventListener('resize',function(){
+  if(rTimer)clearTimeout(rTimer);
+  rTimer=setTimeout(function(){
+    drawMRU();drawMRUV();drawProj();
+  },200);
+});
+
+/* ═══ PANEL GITHUB ═══ */
+var ghM=$('ghM');
+$('btnGh').addEventListener('click',function(){ghM.classList.add('on');});
+$('ghX').addEventListener('click',function(){ghM.classList.remove('on');});
+ghM.addEventListener('click',function(e){if(e.target===ghM)ghM.classList.remove('on');});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&ghM.classList.contains('on'))ghM.classList.remove('on');});
+$('ghEye').addEventListener('click',function(){
+  var t=$('ghT');t.type=t.type==='password'?'text':'password';
+});
+
+function ghH(t){
+  return {'Accept':'application/vnd.github+json','Authorization':'Bearer '+t,'Content-Type':'application/json','X-GitHub-Api-Version':'2022-11-28'};
+}
+function ghLog(txt,cls){
+  var l=$('ghLog');l.classList.add('on');
+  var d=document.createElement('div');
+  d.className=cls||'';d.textContent=txt;
+  l.appendChild(d);l.scrollTop=l.scrollHeight;
+}
+function ghErr(r){return r.json().then(function(j){return j.message;}).catch(function(){return 'HTTP '+r.status;});}
+function b64(s){
+  var b=new TextEncoder().encode(s),bin='';
+  for(var i=0;i<b.length;i++)bin+=String.fromCharCode(b[i]);
+  return btoa(bin);
+}
+function cleanHTML(){
+  var c=document.documentElement.cloneNode(true);
+  var lg=c.querySelector('#ghLog');if(lg){lg.innerHTML='';lg.classList.remove('on');}
+  var gd=c.querySelector('#ghDone');if(gd){gd.innerHTML='';gd.classList.remove('on');}
+  var gm=c.querySelector('#ghM');if(gm)gm.classList.remove('on');
+  var gt=c.querySelector('#ghT');if(gt)gt.value='';
+  var gu=c.querySelector('#ghU');if(gu)gu.value='';
+  var gms=c.querySelector('#ghMs');if(gms)gms.value='Publicación del Laboratorio Virtual Unidad 2 — Cinemática';
+  return '<!DOCTYPE html>\n<!--LAB-VIRTUAL-FISICA-10-U2-->\n'+c.outerHTML;
+}
+
+$('ghTest').addEventListener('click',function(){
+  var t=$('ghT').value.trim();
+  if(!t){ghLog('Escribe tu token primero.','le');return;}
+  ghLog('Verificando token…','li');
+  fetch(API+'/user',{headers:ghH(t)}).then(function(r){
+    if(r.status===401){ghLog('Token inválido (401).','le');return null;}
+    if(!r.ok)return ghErr(r).then(function(m){ghLog('Error: '+m,'le');return null;});
+    return r.json();
+  }).then(function(u){
+    if(u)ghLog('Token válido — @'+u.login,'lk');
+  }).catch(function(e){ghLog('Sin conexión: '+e.message,'le');});
+});
+
+$('ghPub').addEventListener('click',function(){
+  var btn=this;
+  var user=$('ghU').value.trim();
+  var repo=$('ghR').value.trim();
+  var token=$('ghT').value.trim();
+  var crear=$('ghCr').checked;
+  var msg=$('ghMs').value.trim()||'Publicación del Laboratorio Virtual Unidad 2';
+  if(!user||!repo||!token){ghLog('Completa usuario, repositorio y token.','le');return;}
+  if(!/^[A-Za-z0-9._-]+$/.test(repo)){ghLog('Nombre de repositorio no válido.','le');return;}
+  btn.disabled=true;
+  var owner='';
+  ghLog('1/5 Verificando token…','li');
+  fetch(API+'/user',{headers:ghH(token)}).then(function(r){
+    if(r.status===401)throw new Error('Token rechazado (401).');
+    if(!r.ok)return ghErr(r).then(function(m){throw new Error(m);});
+    return r.json();
+  }).then(function(u){
+    owner=u.login;ghLog('Token válido — @'+owner,'lk');
+    if(!crear)return;
+    ghLog('2/5 Creando/verificando repositorio…','li');
+    return fetch(API+'/user/repos',{method:'POST',headers:ghH(token),body:JSON.stringify({name:repo,description:'Laboratorio Virtual de Física 10 — Unidad 2: Cinemática',private:false,auto_init:true})}).then(function(r){
+      if(r.status===201)ghLog('Repositorio creado.','lk');
+      else if(r.status===422)ghLog('Repositorio ya existe.','li');
+      else return ghErr(r).then(function(m){throw new Error('No se pudo crear: '+m);});
+    });
+  }).then(function(){
+    ghLog('3/5 Preparando index.html…','li');
+    return fetch(API+'/repos/'+owner+'/'+repo+'/contents/index.html?ref=main',{headers:ghH(token)}).then(function(r){
+      if(r.status===200)return r.json().then(function(j){return j.sha;});
+      if(r.status===404)return null;
+      return ghErr(r).then(function(m){throw new Error(m);});
+    });
+  }).then(function(sha){
+    var src=cleanHTML();
+    return fetch(API+'/repos/'+owner+'/'+repo+'/contents/index.html',{
+      method:'PUT',headers:ghH(token),
+      body:JSON.stringify({message:msg,content:b64(src),branch:'main',sha:sha||undefined})
+    }).then(function(r){
+      if(!r.ok)return ghErr(r).then(function(m){throw new Error('Error al subir: '+m);});
+      ghLog('index.html subido.','lk');
+    });
+  }).then(function(){
+    ghLog('4/5 Activando GitHub Pages…','li');
+    return fetch(API+'/repos/'+owner+'/'+repo+'/pages',{method:'POST',headers:ghH(token),body:JSON.stringify({source:{branch:'main',path:'/'}})}).then(function(r){
+      if(r.status===201||r.status===204)ghLog('Pages activado.','lk');
+      else if(r.status===409)ghLog('Pages ya estaba activado.','li');
+      else ghLog('Activa Pages a mano en Settings → Pages.','le');
+    });
+  }).then(function(){
+    var url='https://'+owner+'.github.io/'+repo+'/';
+    ghLog('5/5 ¡Publicación completada!','lk');
+    var d=$('ghDone');d.classList.add('on');
+    d.innerHTML='<p style="margin-bottom:6px">🎉 <b>¡Laboratorio publicado!</b></p>'+
+      '<p class="u">'+url+'</p>'+
+      '<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px">'+
+        '<a class="btn pri" href="'+url+'" target="_blank" rel="noopener" style="text-decoration:none">Abrir</a>'+
+        '<button class="btn gh" id="ghCopy">Copiar enlace</button>'+
+      '</div>';
+    $('ghCopy').addEventListener('click',function(){
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(url).then(function(){
+          var b=$('ghCopy');b.textContent='Copiado ✓';
+          setTimeout(function(){b.textContent='Copiar enlace';},2000);
+        });
+      }
+    });
+  }).catch(function(e){ghLog(e.message||e,'le');})
+    .then(function(){btn.disabled=false;});
+});
+
+})();
+</script>
+
+</body></html>
